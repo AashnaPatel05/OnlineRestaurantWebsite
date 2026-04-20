@@ -93,8 +93,8 @@ This project demonstrates a complete web-based restaurant system with real-world
 ---
 
 ## Author
--Aashna Briheshkumar Patel(24018946)
--Harshilkumar Hitendrakumar Patel(22070254)
--Tanisha Shaileshkumar Parekh(24020996)
--CS5003 Datastructures and Specialist Programming_Coursework(2)
--London Metropolitan University
+- Aashna Briheshkumar Patel(24018946)
+- Harshilkumar Hitendrakumar Patel(22070254)
+- Tanisha Shaileshkumar Parekh(24020996)
+- CS5003 Datastructures and Specialist Programming_Coursework(2)
+- London Metropolitan University
