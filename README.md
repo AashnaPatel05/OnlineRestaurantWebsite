@@ -1,4 +1,4 @@
-# 🌿 Spice Garden – Online Restaurant Website
+# Spice Garden – Online Restaurant Website
 
 This project is a web-based online restaurant system developed as part of a group coursework. It allows users to browse menu items, add food to cart, and place orders through a simple and user-friendly interface.
 
@@ -6,7 +6,7 @@ The system is built using Java, JSF (Jakarta Faces), and Apache Derby database.
 
 ---
 
-## 👨‍💻 Features
+## Features
 
 - User registration and login system
 - Menu display with different categories
@@ -20,7 +20,7 @@ The system is built using Java, JSF (Jakarta Faces), and Apache Derby database.
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - Java (Backend)
 - JSF / Facelets (Frontend)
@@ -30,7 +30,7 @@ The system is built using Java, JSF (Jakarta Faces), and Apache Derby database.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 - `Web Pages` → XHTML pages (UI)
 - `Source Packages` → Java Beans, DAO, Entities, Util
@@ -39,7 +39,7 @@ The system is built using Java, JSF (Jakarta Faces), and Apache Derby database.
 
 ---
 
-## ▶️ How to Run the Project
+## How to Run the Project
 
 1. Open project in NetBeans
 2. Start Apache server (GlassFish)
@@ -49,7 +49,7 @@ The system is built using Java, JSF (Jakarta Faces), and Apache Derby database.
 
 ---
 
-## 🗄 Database
+## Database
 
 The database is created using Apache Derby.
 
@@ -59,7 +59,7 @@ You can use the provided `database.sql` file to:
 
 ---
 
-## 📸 Screenshots Included
+## Screenshots Included
 
 The report includes:
 - UI design
@@ -71,13 +71,13 @@ The report includes:
 
 ---
 
-## 🎥 Demo Video
+## Demo Video
 
 A Panopto video demonstration is included in the submission.
 
 ---
 
-## 👥 Group Contribution
+## Group Contribution
 
 This project was developed as a group assignment. All members contributed to:
 - Development
@@ -86,15 +86,15 @@ This project was developed as a group assignment. All members contributed to:
 
 ---
 
-## ✅ Conclusion
+## Conclusion
 
 This project demonstrates a complete web-based restaurant system with real-world features like authentication, cart management, and database integration.
 
 ---
 
 ## Author
-Aashna Briheshkumar Patel(24018946)
-Harshilkumar Hitendrakumar Patel(22070254)
-Tanisha Shaileshkumar Parekh(24020996)
-CS5003 Datastructures and Specialist Programming_Coursework(2)
-London Metropolitan University
+-Aashna Briheshkumar Patel(24018946)
+-Harshilkumar Hitendrakumar Patel(22070254)
+-Tanisha Shaileshkumar Parekh(24020996)
+-CS5003 Datastructures and Specialist Programming_Coursework(2)
+-London Metropolitan University
