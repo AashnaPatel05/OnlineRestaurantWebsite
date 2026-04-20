@@ -14,45 +14,38 @@ import jakarta.faces.context.FacesContext;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /*
  * CheckoutBean
- * ------------------------------------
- * Handles full checkout process:
- * - Loads cart
- * - Validates form
- * - Creates order
- * - Saves payment
+ * Handles full checkout process
  */
 @Named("checkoutBean")
 @ViewScoped
 public class CheckoutBean implements Serializable {
 
-    /* ================= BASIC FIELDS ================= */
-
+    /* BASIC FIELDS */
     private String deliveryAddress;
     private String paymentMethod;
 
     private List<CartItem> cartItems;
     private double totalAmount;
 
-    /* ================= CARD DETAILS ================= */
-
+    /* CARD DETAILS */
     private String cardName;
     private String cardNumber;
     private String cardExpiry;
     private String cardCvv;
 
-    /* ================= CONSTRUCTOR ================= */
-
+    /* CONSTRUCTOR */
     public CheckoutBean() {
         loadCartData();
     }
 
-    /* Load cart from session bean */
+    /* Load cart */
     private void loadCartData() {
 
         CartBean cartBean = getCartBean();
@@ -66,8 +59,7 @@ public class CheckoutBean implements Serializable {
         }
     }
 
-    /* ================= PLACE ORDER ================= */
-
+    /* PLACE ORDER */
     public String placeOrder() {
 
         if (!validateCheckout()) {
@@ -85,41 +77,51 @@ public class CheckoutBean implements Serializable {
 
         try {
 
-            /* Create order object */
+            /* CREATE ORDER */
             Order order = new Order();
             order.setUserId(userId);
-            order.setTotalAmount(new BigDecimal(totalAmount));
+
+            /* FIXED TOTAL AMOUNT */
+            order.setTotalAmount(
+                BigDecimal.valueOf(totalAmount).setScale(2, RoundingMode.HALF_UP)
+            );
+
             order.setDeliveryAddress(deliveryAddress);
             order.setPaymentMethod(paymentMethod);
 
-            /* Convert cart items to order items */
+            /* CREATE ORDER ITEMS */
             List<OrderItem> orderItems = new ArrayList<>();
 
             for (CartItem c : cartItems) {
                 OrderItem item = new OrderItem();
                 item.setFoodId(c.getFoodId());
                 item.setQuantity(c.getQuantity());
-                item.setPriceAtTime(c.getPrice());
+
+                /* FIXED PRICE */
+                item.setPriceAtTime(
+                    c.getPrice().setScale(2, RoundingMode.HALF_UP)
+                );
+
                 orderItems.add(item);
             }
 
-            /* Save order */
+            /* SAVE ORDER */
             int orderId = new OrderDAO().createOrder(order, orderItems);
 
             if (orderId > 0) {
 
-                /* Save payment */
+                /* SAVE PAYMENT */
                 String txnId = generateTransactionId();
                 new PaymentDAO().addPayment(orderId, userId, totalAmount, paymentMethod, txnId);
 
-                /* Clear cart */
+                /* CLEAR CART */
                 CartBean cartBean = getCartBean();
                 if (cartBean != null) {
                     cartBean.clearCart();
                 }
 
-                /* Success message */
-                addMessage("Order placed successfully");
+                /* SUCCESS MESSAGE */
+                addMessage("Your order has been successfully placed. Thank you!");
 
                 return "orderConfirmation?faces-redirect=true";
             }
@@ -132,8 +134,7 @@ public class CheckoutBean implements Serializable {
         return null;
     }
 
-    /* ================= VALIDATION ================= */
-
+    /* VALIDATION */
     private boolean validateCheckout() {
 
         if (deliveryAddress == null || deliveryAddress.trim().isEmpty()) {
@@ -146,7 +147,7 @@ public class CheckoutBean implements Serializable {
             return false;
         }
 
-        /* If card selected then validate fields */
+        /* CARD VALIDATION */
         if ("credit_card".equals(paymentMethod)) {
 
             if (cardName == null || cardName.trim().isEmpty()) {
@@ -173,7 +174,7 @@ public class CheckoutBean implements Serializable {
         return true;
     }
 
-    /* ================= HELPER METHODS ================= */
+    /* HELPER METHODS */
 
     private void addMessage(String msg) {
         FacesContext.getCurrentInstance().addMessage(null,
@@ -196,7 +197,7 @@ public class CheckoutBean implements Serializable {
                 .evaluateExpressionGet(context, "#{loginBean}", LoginBean.class);
     }
 
-    /* ================= GETTERS AND SETTERS ================= */
+    /* GETTERS & SETTERS */
 
     public String getDeliveryAddress() { return deliveryAddress; }
     public void setDeliveryAddress(String deliveryAddress) { this.deliveryAddress = deliveryAddress; }
