@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Spice Garden - Authentic Indian Vegetarian Cuisine</title>
+
+    <!-- ✅ CORRECT CSS -->
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputStylesheet library="css" name="responsive.css"/>
+
+    <!-- ✅ CORRECT JS -->
+    <h:outputScript library="js" name="validation.js"/>
+    <h:outputScript library="js" name="ajax.js"/>
+
+</h:head>
+
+<h:body>
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="container">
+
+            <!-- LOGO -->
+            <div class="logo">
+                <h:link outcome="index">
+                    <h1>🌿 Spice Garden</h1>
+                    <span>Authentic Indian Vegetarian Cuisine</span>
+                </h:link>
+            </div>
+
+            <!-- USER INFO -->
+            <div class="user-info">
+
+                <ui:fragment rendered="#{loginBean.loggedIn}">
+                    Welcome, <strong>#{loginBean.currentUser.fullName}</strong> |
+
+                    <h:link value="My Account" outcome="account"/> |
+
+                    <h:form style="display:inline;">
+                        <h:commandLink value="Logout"
+                                       action="#{loginBean.logout}"
+                                       styleClass="btn btn-small btn-danger"/>
+                    </h:form>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{not loginBean.loggedIn}">
+                    <h:link value="Login" outcome="login"/> |
+                    <h:link value="Register" outcome="register"/>
+                </ui:fragment>
+
+            </div>
+
+            <!-- CART -->
+            <div class="cart-icon">
+                <h:link outcome="cart">
+                    🛒 Cart <span class="cart-count">#{cartBean.itemCount}</span>
+                </h:link>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== NAVBAR ===== -->
+    <div class="navbar">
+        <div class="container">
+            <ul class="nav-menu">
+
+                <li><h:link value="Home" outcome="index"/></li>
+                <li><h:link value="Menu" outcome="menu"/></li>
+                <li><h:link value="About" outcome="about"/></li>
+                <li><h:link value="Gallery" outcome="gallery"/></li>
+                <li><h:link value="Reviews" outcome="reviews"/></li>
+                <li><h:link value="Contact" outcome="contact"/></li>
+                <li><h:link value="FAQ" outcome="faq"/></li>
+
+                <ui:fragment rendered="#{loginBean.loggedIn}">
+                    <li><h:link value="My Orders" outcome="orderHistory"/></li>
+                </ui:fragment>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container">
+            <ui:insert name="content"/>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+                    <h3>🌿 Spice Garden</h3>
+                    <p>Authentic Indian Vegetarian Cuisine made with love and fresh ingredients.</p>
+                </div>
+
+                <div>
+                    <h3>Quick Links</h3>
+                    <p><h:link value="Home" outcome="index"/></p>
+                    <p><h:link value="Menu" outcome="menu"/></p>
+                    <p><h:link value="About Us" outcome="about"/></p>
+                    <p><h:link value="Contact" outcome="contact"/></p>
+                </div>
+
+                <div>
+                    <h3>Contact Us</h3>
+                    <p>📍 123 Curry Lane, London</p>
+                    <p>📞 +44 20 1234 5678</p>
+                    <p>✉️ info@spicegarden.co.uk</p>
+                    <p>🕐 Mon-Sun: 11am - 10pm</p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 Spice Garden. All Rights Reserved.</p>
+            </div>
+
+        </div>
+    </div>
+    
+</h:body>
+
+</html>

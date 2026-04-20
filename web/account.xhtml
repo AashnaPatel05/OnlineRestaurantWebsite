@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+    
+    <ui:define name="content">
+        
+        <div class="page-header">
+            <h1>My Account</h1>
+            <p>Manage your profile and account settings</p>
+        </div>
+        
+        <!-- Not logged in -->
+        <ui:fragment rendered="#{not loginBean.loggedIn}">
+            <div class="login-warning">
+                <p>Please login to view your account.</p>
+                <a href="#{request.contextPath}/login.xhtml">Login</a>
+                <a href="#{request.contextPath}/register.xhtml">Register</a>
+            </div>
+        </ui:fragment>
+        
+        <!-- Logged in -->
+        <ui:fragment rendered="#{loginBean.loggedIn}">
+            
+            <h:messages globalOnly="true"/>
+            
+            <!-- PROFILE -->
+            <h2>Profile</h2>
+            <h:form>
+                
+                <h:outputLabel value="Full Name"/>
+                <h:inputText value="#{loginBean.currentUser.fullName}"/>
+                
+                <h:outputLabel value="Email"/>
+                <h:inputText value="#{loginBean.currentUser.email}" disabled="true"/>
+                
+                <h:outputLabel value="Phone"/>
+                <h:inputText value="#{loginBean.currentUser.phone}"/>
+                
+                <h:outputLabel value="Address"/>
+                <h:inputTextarea value="#{loginBean.currentUser.address}"/>
+                
+                <h:commandButton value="Update Profile"
+                                 action="#{accountBean.updateProfile}"/>
+            </h:form>
+            
+            <!-- PASSWORD -->
+            <h2>Change Password</h2>
+            <h:form>
+                
+                <h:inputSecret value="#{accountBean.currentPassword}" required="true"/>
+                <h:inputSecret value="#{accountBean.newPassword}" required="true"/>
+                <h:inputSecret value="#{accountBean.confirmPassword}" required="true"/>
+                
+                <h:commandButton value="Change Password"
+                                 action="#{accountBean.changePassword}"/>
+            </h:form>
+            
+            <!-- ORDERS -->
+            <h2>Orders</h2>
+            <ui:repeat value="#{orderHistoryBean.orders}" var="order">
+                <div>
+                    Order # #{order.orderId} - #{order.status}
+                </div>
+            </ui:repeat>
+            
+        </ui:fragment>
+        
+    </ui:define>
+    
+</ui:composition>
+</html>

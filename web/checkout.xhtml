@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+
+    <ui:define name="content">
+
+        <div class="page-header">
+            <h1>Checkout</h1>
+            <p>Complete your order</p>
+        </div>
+
+        <!-- NOT LOGGED IN -->
+        <ui:fragment rendered="#{not loginBean.loggedIn}">
+            <div>
+                <p>Please login to continue.</p>
+                <h:link value="Login" outcome="login"/><br/>
+                <h:link value="Register" outcome="register"/>
+            </div>
+        </ui:fragment>
+
+        <!-- LOGGED IN -->
+        <ui:fragment rendered="#{loginBean.loggedIn}">
+
+            <!-- EMPTY CART -->
+            <ui:fragment rendered="#{cartBean.cartEmpty}">
+                <div>
+                    <p>Your cart is empty</p>
+                    <h:link value="Go to Menu" outcome="menu"/>
+                </div>
+            </ui:fragment>
+
+            <!-- CHECKOUT FORM -->
+            <ui:fragment rendered="#{not cartBean.cartEmpty}">
+
+                <h:form id="checkoutForm">
+
+                    <!-- ORDER SUMMARY -->
+                    <h3>Your Order</h3>
+                    <ui:repeat value="#{cartBean.cartItems}" var="item">
+                        <div>
+                            #{item.foodName} x #{item.quantity}
+                            = #{item.formattedSubtotal}
+                        </div>
+                    </ui:repeat>
+
+                    <h3>Total: #{cartBean.formattedCartTotal}</h3>
+
+                    <!-- MESSAGES -->
+                    <h:messages globalOnly="true" style="color:red"/>
+
+                    <!-- ADDRESS -->
+                    <h:outputLabel value="Delivery Address"/>
+                    <h:inputTextarea value="#{checkoutBean.deliveryAddress}"
+                                     required="true"
+                                     requiredMessage="Address is required"
+                                     styleClass="form-control"/>
+
+                    <br/><br/>
+
+                    <!-- PAYMENT -->
+                    <h:outputLabel value="Payment Method"/>
+                    <h:selectOneRadio value="#{checkoutBean.paymentMethod}">
+                        <f:selectItem itemValue="credit_card" itemLabel="Card"/>
+                        <f:selectItem itemValue="cash" itemLabel="Cash"/>
+                        <f:selectItem itemValue="online" itemLabel="Online"/>
+
+                        <!-- AJAX -->
+                        <f:ajax render="checkoutForm"/>
+                    </h:selectOneRadio>
+
+                    <br/>
+
+                    <!-- CARD DETAILS -->
+                    <ui:fragment rendered="#{checkoutBean.paymentMethod eq 'credit_card'}">
+
+                        <div style="margin-top:15px;">
+
+                            <!-- CARD NAME -->
+                            <h:outputLabel value="Name on Card"/>
+                            <h:inputText value="#{checkoutBean.cardName}"
+                                         styleClass="form-control"
+                                         style="width:100%; margin-bottom:10px;"
+                                         placeholder="Full Name"/>
+
+                            <!-- CARD NUMBER -->
+                            <h:outputLabel value="Card Number"/>
+                            <h:inputText value="#{checkoutBean.cardNumber}"
+                                         styleClass="form-control"
+                                         style="width:100%; margin-bottom:10px;"
+                                         placeholder="1234 5678 9012 3456"/>
+
+                            <!-- EXPIRY + CVV -->
+                            <div style="display:flex; gap:10px;">
+
+                                <div style="flex:1;">
+                                    <h:outputLabel value="Expiry"/>
+                                    <h:inputText value="#{checkoutBean.cardExpiry}"
+                                                 styleClass="form-control"
+                                                 placeholder="MM/YY"/>
+                                </div>
+
+                                <div style="flex:1;">
+                                    <h:outputLabel value="CVV"/>
+                                    <h:inputText value="#{checkoutBean.cardCvv}"
+                                                 styleClass="form-control"
+                                                 placeholder="123"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </ui:fragment>
+
+                    <br/><br/>
+
+                    <!-- BUTTON -->
+                    <h:commandButton value="Place Order"
+                                     action="#{checkoutBean.placeOrder}"
+                                     styleClass="btn btn-primary"/>
+
+                </h:form>
+
+                <br/>
+
+                <!-- BACK -->
+                <h:link value="Back to Cart" outcome="cart"/>
+
+            </ui:fragment>
+
+        </ui:fragment>
+
+    </ui:define>
+
+</ui:composition>
+</html>

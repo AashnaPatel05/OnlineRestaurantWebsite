@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<ui:composition template="template.xhtml">
+    
+    <ui:define name="content">
+        
+        <div class="page-header">
+            <h1>About Spice Garden</h1>
+            <p>Authentic Indian and Gujarati Vegetarian Cuisine Since 2010</p>
+        </div>
+        
+        <div class="about-section">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Our Story</h2>
+                    <p>Spice Garden was founded in 2010.</p>
+                </div>
+                <div class="about-image">
+                    <img src="#{request.contextPath}/resources/images/restaurant.jpg"
+                         alt="Restaurant"/>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>Experience the Taste of India</h2>
+            <a href="#{request.contextPath}/menu.xhtml">Menu</a>
+        </div>
+        
+    </ui:define>
+    
+</ui:composition>
+</html>

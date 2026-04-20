@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+    
+    <ui:define name="content">
+        
+        <div class="page-header">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions</p>
+        </div>
+        
+        <!-- SIMPLE FAQ LIST -->
+        <div>
+            
+            <h2>Ordering</h2>
+            <p><b>How do I place an order?</b></p>
+            <p>Login, choose items, add to cart and checkout.</p>
+            
+            <p><b>Can I cancel my order?</b></p>
+            <p>You can cancel within 5 minutes by calling us.</p>
+            
+            
+            <h2>Delivery</h2>
+            <p><b>Delivery time?</b></p>
+            <p>Usually 30-40 minutes.</p>
+            
+            <p><b>Delivery cost?</b></p>
+            <p>£2.99 or free above £30.</p>
+            
+            
+            <h2>Food</h2>
+            <p><b>Is food vegetarian?</b></p>
+            <p>Yes, 100% vegetarian.</p>
+            
+            
+            <h2>Payment</h2>
+            <p><b>Payment methods?</b></p>
+            <p>Card, Cash, Online.</p>
+            
+            
+            <h2>Account</h2>
+            <p><b>Can I see past orders?</b></p>
+            <p>Yes, in your account page.</p>
+            
+            
+            <h2>Restaurant</h2>
+            <p><b>Opening hours?</b></p>
+            <p>Mon-Fri 11AM - 10PM</p>
+            
+        </div>
+        
+        <!-- CONTACT -->
+        <div>
+            <h2>Still have questions?</h2>
+            <a href="#{request.contextPath}/contact.xhtml">Contact Us</a>
+        </div>
+        
+    </ui:define>
+    
+</ui:composition>
+</html>

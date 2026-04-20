@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+    
+    <ui:define name="content">
+        
+        <!-- NOT LOGGED IN -->
+        <ui:fragment rendered="#{not loginBean.loggedIn}">
+            <div>
+                <p>Please login to view your order confirmation.</p>
+                <a href="#{request.contextPath}/login.xhtml">Login</a>
+            </div>
+        </ui:fragment>
+        
+        <!-- LOGGED IN -->
+        <ui:fragment rendered="#{loginBean.loggedIn}">
+            
+            <h1>Order Placed Successfully!</h1>
+            <p>Thank you for your order</p>
+            
+            <!-- ORDER DETAILS -->
+            <div>
+                <p><strong>Payment Method:</strong> #{checkoutBean.paymentMethod}</p>
+                <p><strong>Delivery Address:</strong> #{checkoutBean.deliveryAddress}</p>
+            </div>
+            
+            <!-- ORDER ITEMS -->
+            <h3>Items</h3>
+            
+            <table border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                </tr>
+                
+                <ui:repeat value="#{cartBean.cartItems}" var="item">
+                    <tr>
+                        <td>#{item.foodName}</td>
+                        <td>#{item.quantity}</td>
+                        <td>#{item.formattedPrice}</td>
+                    </tr>
+                </ui:repeat>
+            </table>
+            
+            <!-- TOTAL -->
+            <p><strong>Total:</strong> #{cartBean.formattedCartTotal}</p>
+            
+            <!-- ACTIONS -->
+            <br/>
+            <a href="#{request.contextPath}/menu.xhtml">Order More</a> |
+            <a href="#{request.contextPath}/index.xhtml">Home</a>
+            
+        </ui:fragment>
+        
+    </ui:define>
+    
+</ui:composition>
+</html>

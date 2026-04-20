@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+    
+    <ui:define name="content">
+        
+        <div class="page-header">
+            <h1>Contact Us</h1>
+            <p>Get in touch with Spice Garden</p>
+        </div>
+        
+        <!-- CONTACT INFO -->
+        <div>
+            <h3>Location</h3>
+            <p>London, United Kingdom</p>
+            
+            <h3>Phone</h3>
+            <p>+44 20 1234 5678</p>
+            
+            <h3>Email</h3>
+            <p>info@spicegarden.com</p>
+        </div>
+        
+        <!-- MESSAGES -->
+        <h:messages globalOnly="true"/>
+        
+        <!-- CONTACT FORM -->
+        <h:form>
+            
+            <h:outputLabel value="Name"/>
+            <h:inputText value="#{contactBean.name}" required="true"/>
+            
+            <h:outputLabel value="Email"/>
+            <h:inputText value="#{contactBean.email}" required="true"/>
+            
+            <h:outputLabel value="Phone"/>
+            <h:inputText value="#{contactBean.phone}"/>
+            
+            <h:outputLabel value="Subject"/>
+            <h:selectOneMenu value="#{contactBean.subject}" required="true">
+                <f:selectItem itemValue="" itemLabel="Select"/>
+                <f:selectItem itemValue="general" itemLabel="General Inquiry"/>
+                <f:selectItem itemValue="order" itemLabel="Order"/>
+                <f:selectItem itemValue="feedback" itemLabel="Feedback"/>
+            </h:selectOneMenu>
+            
+            <h:outputLabel value="Message"/>
+            <h:inputTextarea value="#{contactBean.message}" required="true"/>
+            
+            <h:commandButton value="Send Message"
+                             action="#{contactBean.sendMessage}"/>
+            
+        </h:form>
+        
+        <!-- MAP (FIXED & ERROR HERE) -->
+        <div>
+            <iframe 
+                src="https://maps.google.com/maps?q=London&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                width="100%" 
+                height="300"
+                style="border:0;">
+            </iframe>
+        </div>
+        
+    </ui:define>
+    
+</ui:composition>
+</html>

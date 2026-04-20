@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<ui:composition template="template.xhtml">
+
+    <ui:define name="content">
+
+        <div style="max-width: 600px; margin: 0 auto;">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+                <h1 style="color: #2c3e2f;">Create Account</h1>
+                <p style="color: #666;">Join Spice Garden and start ordering authentic Indian food!</p>
+            </div>
+
+            <!-- ERROR / SUCCESS MESSAGES -->
+            <h:messages globalOnly="true" styleClass="error-msg" 
+                        infoClass="info-msg" errorClass="error-msg"/>
+
+            <!-- REGISTRATION FORM -->
+            <div style="background: white; padding: 35px; border-radius: 12px; 
+                        box-shadow: 0 3px 15px rgba(0,0,0,0.1);">
+
+                <h:form>
+
+                    <!-- USERNAME -->
+                    <div class="form-group">
+                        <label for="username">👤 Username *</label>
+                        <h:inputText id="username"
+                                     value="#{registrationBean.username}"
+                                     styleClass="form-control"
+                                     required="true"
+                                     requiredMessage="Username is required."
+                                     placeholder="e.g. priya_patel"/>
+                        <h:message for="username" styleClass="error-msg"/>
+                        <span class="field-hint">Minimum 3 characters</span>
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <label for="email">✉️ Email Address *</label>
+                        <h:inputText id="email"
+                                     value="#{registrationBean.email}"
+                                     styleClass="form-control"
+                                     required="true"
+                                     requiredMessage="Email is required."
+                                     placeholder="e.g. priya@email.com"/>
+                        <h:message for="email" styleClass="error-msg"/>
+                    </div>
+
+                    <!-- FULL NAME -->
+                    <div class="form-group">
+                        <label for="fullName">🪪 Full Name *</label>
+                        <h:inputText id="fullName"
+                                     value="#{registrationBean.fullName}"
+                                     styleClass="form-control"
+                                     required="true"
+                                     requiredMessage="Full name is required."
+                                     placeholder="e.g. Priya Patel"/>
+                        <h:message for="fullName" styleClass="error-msg"/>
+                    </div>
+
+                    <!-- PHONE -->
+                    <div class="form-group">
+                        <label for="phone">📞 Phone Number *</label>
+                        <h:inputText id="phone"
+                                     value="#{registrationBean.phone}"
+                                     styleClass="form-control"
+                                     required="true"
+                                     requiredMessage="Phone number is required."
+                                     placeholder="e.g. 07911123456"/>
+                        <h:message for="phone" styleClass="error-msg"/>
+                        <span class="field-hint">10-11 digits, UK format</span>
+                    </div>
+
+                    <!-- ADDRESS -->
+                    <div class="form-group">
+                        <label for="address">📍 Delivery Address</label>
+                        <h:inputTextarea id="address"
+                                         value="#{registrationBean.address}"
+                                         styleClass="form-control"
+                                         rows="3"
+                                         placeholder="e.g. 15 Curry Lane, London, HA0 2HJ"/>
+                        <h:message for="address" styleClass="error-msg"/>
+                    </div>
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+                        <label for="password">🔒 Password *</label>
+                        <h:inputSecret id="password"
+                                       value="#{registrationBean.password}"
+                                       styleClass="form-control"
+                                       required="true"
+                                       requiredMessage="Password is required."
+                                       placeholder="Minimum 6 characters"/>
+                        <h:message for="password" styleClass="error-msg"/>
+                        <span class="field-hint">Minimum 6 characters</span>
+                    </div>
+
+                    <!-- CONFIRM PASSWORD -->
+                    <div class="form-group">
+                        <label for="confirmPassword">🔒 Confirm Password *</label>
+                        <h:inputSecret id="confirmPassword"
+                                       value="#{registrationBean.confirmPassword}"
+                                       styleClass="form-control"
+                                       required="true"
+                                       requiredMessage="Please confirm your password."
+                                       placeholder="Re-enter your password"/>
+                        <h:message for="confirmPassword" styleClass="error-msg"/>
+                    </div>
+
+                    <!-- SUBMIT BUTTON -->
+                    <div class="form-group" style="margin-top: 25px;">
+                        <h:commandButton value="🌿 Create Account"
+                                         action="#{registrationBean.register}"
+                                         styleClass="btn btn-primary btn-block"/>
+                    </div>
+
+                </h:form>
+
+                <!-- LOGIN LINK -->
+                <div style="text-align: center; margin-top: 20px; 
+                            padding-top: 20px; border-top: 1px solid #eee;">
+                    <p>Already have an account? 
+                        <h:link outcome="/login.xhtml" 
+                                value="Login here" 
+                                styleClass="btn btn-outline btn-small"/>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>
+</html>

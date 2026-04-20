@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+
+    <ui:define name="content">
+
+        <!-- HEADER -->
+        <div class="page-header">
+            <h1>🍛 Our Menu</h1>
+            <p>Authentic Indian and Gujarati Vegetarian Dishes</p>
+        </div>
+
+        <!-- SEARCH -->
+        <h:form id="searchForm">
+            <div class="search-box">
+                <h:inputText value="#{menuBean.searchKeyword}"
+                             styleClass="form-control"
+                             placeholder="Search dishes..."/>
+
+                <h:commandButton value="Search"
+                                 action="#{menuBean.search}"
+                                 styleClass="btn btn-primary"/>
+
+                <h:commandButton value="Clear"
+                                 action="#{menuBean.clearSearch}"
+                                 styleClass="btn btn-secondary"/>
+            </div>
+        </h:form>
+
+        <!-- SEARCH RESULTS -->
+        <ui:fragment rendered="#{not empty menuBean.searchResults}">
+            <h2>Search Results</h2>
+
+            <div class="menu-grid">
+                <ui:repeat value="#{menuBean.searchResults}" var="item">
+
+                    <div class="menu-card">
+
+                        <h:graphicImage library="images"
+                                        name="#{item.imageUrl}"
+                                        alt="#{item.name}"
+                                        styleClass="menu-image"/>
+
+                        <div class="menu-info">
+                            <h3>#{item.name}</h3>
+                            <p>#{item.description}</p>
+                            <p class="price">#{item.formattedPrice}</p>
+
+                            <h:form>
+                                <h:commandButton value="Add to Cart"
+                                                 action="#{cartBean.addToCart(item.foodId)}"
+                                                 styleClass="btn btn-primary"/>
+                            </h:form>
+
+                        </div>
+
+                    </div>
+
+                </ui:repeat>
+            </div>
+        </ui:fragment>
+
+        <!-- ALL ITEMS -->
+        <ui:fragment rendered="#{empty menuBean.searchResults}">
+
+            <ui:fragment rendered="#{not empty menuBean.allFoodItems}">
+
+                <h2>All Dishes</h2>
+
+                <div class="menu-grid">
+                    <ui:repeat value="#{menuBean.allFoodItems}" var="item">
+
+                        <div class="menu-card">
+
+                            <h:graphicImage library="images"
+                                            name="#{item.imageUrl}"
+                                            alt="#{item.name}"
+                                            styleClass="menu-image"/>
+
+                            <div class="menu-info">
+                                <h3>#{item.name}</h3>
+                                <p>#{item.description}</p>
+                                <p class="price">#{item.formattedPrice}</p>
+
+                                <h:form>
+                                    <h:commandButton value="Add to Cart"
+                                                     action="#{cartBean.addToCart(item.foodId)}"
+                                                     styleClass="btn btn-primary"/>
+                                </h:form>
+
+                            </div>
+
+                        </div>
+
+                    </ui:repeat>
+                </div>
+
+            </ui:fragment>
+
+            <!-- EMPTY -->
+            <ui:fragment rendered="#{empty menuBean.allFoodItems}">
+                <p>No menu items available.</p>
+            </ui:fragment>
+
+        </ui:fragment>
+
+    </ui:define>
+
+</ui:composition>
+</html>

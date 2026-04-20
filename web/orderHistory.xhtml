@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+    
+    <ui:define name="content">
+        
+        <!-- NOT LOGGED IN -->
+        <ui:fragment rendered="#{not loginBean.loggedIn}">
+            <div>
+                <p>Please login to view your order history.</p>
+                <a href="#{request.contextPath}/login.xhtml">Login</a>
+            </div>
+        </ui:fragment>
+        
+        <!-- LOGGED IN -->
+        <ui:fragment rendered="#{loginBean.loggedIn}">
+            
+            <h1>My Orders</h1>
+            
+            <!-- HAS ORDERS -->
+            <ui:fragment rendered="#{orderHistoryBean.orders != null and not empty orderHistoryBean.orders}">
+                
+                <ui:repeat value="#{orderHistoryBean.orders}" var="order">
+                    
+                    <div>
+                        <p><strong>Order ID:</strong> #{order.orderId}</p>
+                        <p><strong>Status:</strong> #{order.status}</p>
+                        <p><strong>Total:</strong> #{order.formattedTotal}</p>
+                        
+                        <!-- ITEMS -->
+                        <ul>
+                            <ui:repeat value="#{order.orderItems}" var="item">
+                                <li>
+                                    #{item.quantity} x #{item.foodName} 
+                                    (#{item.formattedSubtotal})
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                        
+                        <!-- VIEW BUTTON -->
+                        <h:form>
+                            <h:commandButton value="View Details"
+                                             action="#{orderHistoryBean.viewOrderDetails(order.orderId)}"/>
+                        </h:form>
+                        
+                        <hr/>
+                    </div>
+                    
+                </ui:repeat>
+                
+            </ui:fragment>
+            
+            <!-- NO ORDERS -->
+            <ui:fragment rendered="#{orderHistoryBean.orders == null or empty orderHistoryBean.orders}">
+                <p>No orders found.</p>
+                <a href="#{request.contextPath}/menu.xhtml">Browse Menu</a>
+            </ui:fragment>
+            
+        </ui:fragment>
+        
+    </ui:define>
+    
+</ui:composition>
+</html>

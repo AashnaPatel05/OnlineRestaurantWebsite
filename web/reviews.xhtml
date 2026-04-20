@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+
+    <ui:define name="content">
+
+        <!-- PAGE TITLE -->
+        <div class="page-header">
+            <h1>Customer Reviews</h1>
+        </div>
+
+        <!-- GLOBAL MESSAGES -->
+        <h:messages globalOnly="true" style="color:red"/>
+
+        <!-- REVIEW FORM -->
+        <h:form styleClass="review-form">
+
+            <h3>Leave a Review</h3>
+
+            <h:panelGrid columns="2" cellpadding="8">
+
+                <!-- NAME -->
+                <h:outputLabel value="Your Name:" />
+                <h:inputText value="#{reviewBean.reviewerName}" required="true"/>
+
+                <!-- RATING -->
+                <h:outputLabel value="Rating:" />
+                <h:selectOneMenu value="#{reviewBean.rating}">
+                    <f:selectItem itemValue="1" itemLabel="1 Star"/>
+                    <f:selectItem itemValue="2" itemLabel="2 Stars"/>
+                    <f:selectItem itemValue="3" itemLabel="3 Stars"/>
+                    <f:selectItem itemValue="4" itemLabel="4 Stars"/>
+                    <f:selectItem itemValue="5" itemLabel="5 Stars"/>
+                </h:selectOneMenu>
+
+                <!-- COMMENT -->
+                <h:outputLabel value="Comment:" />
+                <h:inputTextarea value="#{reviewBean.comment}" rows="4"/>
+
+            </h:panelGrid>
+
+            <br/>
+
+            <!-- SUBMIT BUTTON -->
+            <h:commandButton value="Submit Review"
+                             action="#{reviewBean.submitReview}"
+                             styleClass="btn btn-primary"/>
+
+        </h:form>
+
+        <hr/>
+
+        <!-- DISPLAY REVIEWS -->
+        <h2>All Reviews</h2>
+
+        <ui:repeat value="#{reviewBean.allReviews}" var="r">
+
+            <div class="review-card">
+
+                <p>
+                    <strong>#{r.reviewerName}</strong><br/>
+                    <small>#{r.date}</small>
+                </p>
+
+                <p>
+                    Rating: #{reviewBean.getStars(r.rating)}
+                </p>
+
+                <p>#{r.comment}</p>
+
+            </div>
+
+            <hr/>
+
+        </ui:repeat>
+
+    </ui:define>
+
+</ui:composition>
+</html>

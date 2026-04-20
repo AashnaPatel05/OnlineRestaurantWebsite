@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="template.xhtml">
+    
+    <ui:define name="content">
+        
+        <!-- LOGIN SECTION -->
+        <div class="auth-container">
+            
+            <h2>Login</h2>
+            <p>Enter your details to continue</p>
+            
+            <!-- Messages -->
+            <h:messages globalOnly="true" styleClass="messages"/>
+            
+            <!-- FORM -->
+            <h:form>
+                
+                <div>
+                    <label>Username</label>
+                    <h:inputText value="#{loginBean.username}" required="true"/>
+                </div>
+                
+                <div>
+                    <label>Password</label>
+                    <h:inputSecret value="#{loginBean.password}" required="true"/>
+                </div>
+                
+                <div>
+                    <h:commandButton value="Login" action="#{loginBean.login}"/>
+                </div>
+                
+            </h:form>
+            
+            <!-- REGISTER LINK -->
+            <div>
+                <p>Don't have an account?</p>
+                <h:link outcome="register.xhtml" value="Create Account"/>
+            </div>
+            
+        </div>
+        
+    </ui:define>
+    
+</ui:composition>
+</html>

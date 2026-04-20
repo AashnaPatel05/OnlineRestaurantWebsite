@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<ui:composition template="template.xhtml">
+
+    <ui:define name="content">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1 style="color: #2c3e2f;">🛒 Your Shopping Cart</h1>
+            <p>Review your items before checkout</p>
+        </div>
+
+        <!-- NOT LOGGED IN -->
+        <ui:fragment rendered="#{not loginBean.loggedIn}">
+            <div class="login-warning">
+                <p>⚠️ Please login to view your cart.</p>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 15px;">
+                    <h:link outcome="/login.xhtml" value="Login" styleClass="btn btn-primary"/>
+                    <h:link outcome="/register.xhtml" value="Register" styleClass="btn btn-secondary"/>
+                </div>
+            </div>
+        </ui:fragment>
+
+        <!-- LOGGED IN -->
+        <ui:fragment rendered="#{loginBean.loggedIn}">
+
+            <!-- EMPTY CART -->
+            <ui:fragment rendered="#{cartBean.cartEmpty}">
+                <div class="empty-cart">
+                    <p>🍽️ Your cart is empty!</p>
+                    <p>Browse our delicious menu and add some items.</p>
+                    <h:link outcome="/menu.xhtml" value="Go to Menu" styleClass="btn btn-primary"/>
+                </div>
+            </ui:fragment>
+
+            <!-- CART HAS ITEMS -->
+            <ui:fragment rendered="#{not cartBean.cartEmpty}">
+
+                <div class="cart-container">
+
+                    <!-- LEFT: CART ITEMS TABLE -->
+                    <div>
+                        <h:form id="cartForm">
+
+                            <table class="cart-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat value="#{cartBean.cartItems}" var="item">
+                                        <tr>
+                                            <td><strong>#{item.foodName}</strong></td>
+                                            <td>#{item.formattedPrice}</td>
+                                            <td>
+                                                <h:inputText value="#{item.quantity}"
+                                                             styleClass="quantity-input"
+                                                             size="3">
+                                                    <f:ajax event="change"
+                                                            render="cartForm"
+                                                            listener="#{cartBean.updateQuantity(item.cartId, item.quantity)}"/>
+                                                </h:inputText>
+                                            </td>
+                                            <td>#{item.formattedPrice}</td>
+                                            <td>
+                                                <h:commandLink value="❌ Remove"
+                                                               styleClass="remove-link"
+                                                               action="#{cartBean.removeFromCart(item.cartId)}">
+                                                    <f:ajax render="cartForm"/>
+                                                </h:commandLink>
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+
+                            <!-- CLEAR CART -->
+                            <div class="clear-cart">
+                                <h:commandLink value="🗑️ Clear Cart"
+                                               styleClass="clear-link"
+                                               action="#{cartBean.clearCart}">
+                                    <f:ajax render="cartForm"/>
+                                </h:commandLink>
+                            </div>
+
+                        </h:form>
+                    </div>
+
+                    <!-- RIGHT: ORDER SUMMARY -->
+                    <div class="cart-summary">
+                        <h3 style="color: #2c3e2f; margin-bottom: 20px;">📋 Order Summary</h3>
+
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span>#{cartBean.formattedCartTotal}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee</span>
+                            <span>£2.99</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span>#{cartBean.formattedCartTotal}</span>
+                        </div>
+
+                        <div class="summary-actions" style="flex-direction: column;">
+                            <h:link outcome="/checkout.xhtml"
+                                    value="✅ Proceed to Checkout"
+                                    styleClass="btn btn-primary btn-block"/>
+                            <h:link outcome="/menu.xhtml"
+                                    value="🍛 Continue Shopping"
+                                    styleClass="btn btn-outline btn-block"
+                                    style="margin-top: 10px;"/>
+                        </div>
+                    </div>
+
+                </div>
+
+            </ui:fragment>
+
+        </ui:fragment>
+
+    </ui:define>
+
+</ui:composition>
+</html>
